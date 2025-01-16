@@ -1,10 +1,8 @@
 package com.task_manager.service;
 
-import com.task_manager.entity.AppUser;
-import com.task_manager.entity.Priority;
-import com.task_manager.entity.Role;
-import com.task_manager.entity.Task;
+import com.task_manager.entity.*;
 import com.task_manager.exception.TaskNotFoundException;
+import com.task_manager.repository.ColumnRepository;
 import com.task_manager.repository.TaskRepository;
 import com.task_manager.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
@@ -23,6 +21,9 @@ public class TaskService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ColumnRepository columnRepository;
 
     @PostConstruct
     public void init() {
@@ -52,6 +53,17 @@ public class TaskService {
         taskRepository.delete(task);
     }
 
+    public List<ColumnWithTasksDTO> getAllColumnsWithTasks() {
+        List<Column> columns = columnRepository.findAll();
+        List<Task> tasks = taskRepository.findAll();
+
+        return columns.stream().map(column -> new ColumnWithTasksDTO(
+                column.getId(),
+                column.getName(),
+                tasks.stream().filter(task -> task.getStatusColumn().getId() == column.getId()).toList()
+        )).toList();
+    }
+
 
     public void addFakeTasks() {
         AppUser user1 = new AppUser("Stéphane", "Tatin", "STE", "password", Role.USER);
@@ -64,18 +76,24 @@ public class TaskService {
         AppUser user4 = new AppUser("Hermann", "Admin", "HAN","password", Role.ADMIN);
         this.userRepository.save(user4);
 
+        Column column1 = new Column("To-Do");
+        this.columnRepository.save(column1);
+
         // Create fake tasks
         Task task1 = new Task("Prepare Report", "Prepare the annual financial report.", LocalDateTime.now().plusDays(7));
         task1.setPriority(Priority.CRITICAL);
         task1.setAssignedTo(user1);
+        task1.setStatusColumn(column1);
 
         Task task2 = new Task("Team Meeting", "Organize a team meeting to discuss project updates.", LocalDateTime.now().plusDays(3));
         task2.setPriority(Priority.HIGH);
         task2.setAssignedTo(user2);
+        task2.setStatusColumn(column1);
 
         Task task3 = new Task("Code Review", "Review pull requests for the new feature.", LocalDateTime.now().plusDays(1));
         task3.setPriority(Priority.LOW);
         task3.setAssignedTo(user1);
+        task3.setStatusColumn(column1);
 
         // Save the tasks in the repository
         this.taskRepository.save(task1);

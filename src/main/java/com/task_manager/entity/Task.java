@@ -23,11 +23,22 @@ public class Task {
     @ManyToOne()
     @JoinColumn(name="assigned_to", referencedColumnName = "id")
     private AppUser assignedTo;
+    @ManyToOne()
+    @JoinColumn(name="status_column", referencedColumnName = "id")
+    private Column statusColumn;
 
     public Task(String title, String description, LocalDateTime targetTime) {
         this.title = title;
         this.description = description;
         this.targetTime = targetTime;
+    }
+
+    public Column getStatusColumn() {
+        return statusColumn;
+    }
+
+    public void setStatusColumn(Column statusColumn) {
+        this.statusColumn = statusColumn;
     }
 
     public AppUser getAssignedTo() {
