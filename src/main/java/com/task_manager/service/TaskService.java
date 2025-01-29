@@ -41,6 +41,8 @@ public class TaskService {
     }
 
     public Task saveTask(Task task) {
+
+
         return taskRepository.save(task);
     }
 
@@ -79,6 +81,9 @@ public class TaskService {
         Column column1 = new Column("To-Do");
         this.columnRepository.save(column1);
 
+        Column column2 = new Column("Done");
+        this.columnRepository.save(column2);
+
         // Create fake tasks
         Task task1 = new Task("Prepare Report", "Prepare the annual financial report.", LocalDateTime.now().plusDays(7));
         task1.setPriority(Priority.CRITICAL);
@@ -93,7 +98,7 @@ public class TaskService {
         Task task3 = new Task("Code Review", "Review pull requests for the new feature.", LocalDateTime.now().plusDays(1));
         task3.setPriority(Priority.LOW);
         task3.setAssignedTo(user1);
-        task3.setStatusColumn(column1);
+        task3.setStatusColumn(column2);
 
         // Save the tasks in the repository
         this.taskRepository.save(task1);

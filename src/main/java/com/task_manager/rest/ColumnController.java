@@ -1,5 +1,6 @@
 package com.task_manager.rest;
 
+import com.task_manager.entity.Column;
 import com.task_manager.entity.Task;
 import com.task_manager.service.ColumnService;
 import com.task_manager.service.ColumnWithTasksDTO;
@@ -31,12 +32,12 @@ public class ColumnController {
 //    }
 
     @PostMapping
-    public Task saveTask(@RequestBody Task task) {
-        return columnService.sa(task);
+    public Column saveColumn(@RequestBody Column column) {
+        return columnService.saveColumn(column);
     }
 
     @DeleteMapping("/id")
-    public void deleteTask(@PathVariable long id) {
-        taskService.deletedTask(id);
+    public void deleteColumn(@PathVariable long id) {
+        columnService.deletedColumn(id);
     }
 }

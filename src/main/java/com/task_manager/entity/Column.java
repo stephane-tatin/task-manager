@@ -15,8 +15,6 @@ public class Column {
     @NotNull
     @Size(max=50)
     private String name;
-//    @OneToMany(mappedBy = "column", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Task> tasks;
 
     public Column() {
 
