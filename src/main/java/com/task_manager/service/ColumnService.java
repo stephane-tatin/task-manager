@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -53,7 +54,12 @@ public class ColumnService {
         return columns.stream().map(column -> new ColumnWithTasksDTO(
                 column.getId(),
                 column.getName(),
-                tasks.stream().filter(task -> task.getStatusColumn().getId() == column.getId()).toList()
+                tasks.stream()
+                        .filter(task -> task.getStatusColumn().getId() == column.getId())
+                        .sorted(Comparator
+                                .comparing(Task::getIndex, Comparator.nullsLast(Comparator.naturalOrder()))
+                                .thenComparing(Task::getCreatedAt))
+                        .toList()
         )).toList();
     }
 

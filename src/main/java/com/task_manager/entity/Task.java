@@ -15,6 +15,7 @@ public class Task {
     @NotNull
     private String title;
     private String description;
+    private int index;
     @Enumerated(EnumType.STRING)
     private Priority priority;
     private LocalDateTime createdAt;
@@ -26,6 +27,14 @@ public class Task {
     @ManyToOne()
     @JoinColumn(name="status_column", referencedColumnName = "id")
     private Column statusColumn;
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     public Task(String title, String description, LocalDateTime targetTime) {
         this.title = title;

@@ -88,11 +88,13 @@ public class TaskService {
         Task task1 = new Task("Prepare Report", "Prepare the annual financial report.", LocalDateTime.now().plusDays(7));
         task1.setPriority(Priority.CRITICAL);
         task1.setAssignedTo(user1);
+        task1.setIndex(2);
         task1.setStatusColumn(column1);
 
         Task task2 = new Task("Team Meeting", "Organize a team meeting to discuss project updates.", LocalDateTime.now().plusDays(3));
         task2.setPriority(Priority.HIGH);
         task2.setAssignedTo(user2);
+        task2.setIndex(1);
         task2.setStatusColumn(column1);
 
         Task task3 = new Task("Code Review", "Review pull requests for the new feature.", LocalDateTime.now().plusDays(1));
