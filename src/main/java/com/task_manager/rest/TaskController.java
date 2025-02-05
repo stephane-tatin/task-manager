@@ -5,6 +5,7 @@ import com.task_manager.service.ColumnWithTasksDTO;
 import com.task_manager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,13 +25,7 @@ public class TaskController {
 //        return taskService.getAllTasks(sort);
 //    }
 
-    @GetMapping
-    public List<ColumnWithTasksDTO> getAllColumnsWithTasks(@RequestParam(defaultValue = "id") String sortBy, @RequestParam(defaultValue = "asc") String order) {
-//        Sort.Direction direction = "desc".equalsIgnoreCase(order) ? Sort.Direction.DESC: Sort.Direction.ASC;
-//        Sort sort = Sort.by(direction, sortBy);
 
-        return taskService.getAllColumnsWithTasks();
-    }
 
     @GetMapping("/id")
     public Task getTaskById(@PathVariable long id) {
@@ -41,6 +36,15 @@ public class TaskController {
     public Task saveTask(@RequestBody Task task) {
         return taskService.saveTask(task);
     }
+
+
+    @PostMapping("/move")
+    public ResponseEntity<Void> changeIndex(@RequestBody Task task) {
+
+         taskService.changeIndex(task);
+         return ResponseEntity.ok().build();
+    }
+
 
     @DeleteMapping("/id")
     public void deleteTask(@PathVariable long id) {

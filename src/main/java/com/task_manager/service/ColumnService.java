@@ -55,7 +55,7 @@ public class ColumnService {
                 column.getId(),
                 column.getName(),
                 tasks.stream()
-                        .filter(task -> task.getStatusColumn().getId() == column.getId())
+                        .filter(task -> task.getStatusColumn().getId().equals(column.getId()))
                         .sorted(Comparator
                                 .comparing(Task::getIndex, Comparator.nullsLast(Comparator.naturalOrder()))
                                 .thenComparing(Task::getCreatedAt))
