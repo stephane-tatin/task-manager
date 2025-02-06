@@ -1,31 +1,29 @@
 package com.task_manager.service;
 
 import com.task_manager.entity.AppUser;
-import com.task_manager.entity.Column;
 import com.task_manager.entity.Priority;
 import com.task_manager.entity.Task;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class ColumnWithTasksDTO {
-    private Long id;
+    private UUID id;
     private String name;
     private List<Task> tasks;
 
-    ColumnWithTasksDTO(Long id,String name, List<Task> tasks) {
+    ColumnWithTasksDTO(UUID id, String name, List<Task> tasks) {
         this.id = id;
         this.name = name;
         this.tasks = tasks;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

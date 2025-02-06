@@ -2,16 +2,16 @@ package com.task_manager.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 public class Task {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    private UUID id;
     @NotNull
     private String title;
     private String description;
@@ -69,11 +69,11 @@ public class Task {
 
     public Task() {}
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
