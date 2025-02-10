@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -27,7 +28,7 @@ public class UserService {
         return userRepository.save(appUser);
     }
 
-    public AppUser findById(Long id) {
+    public AppUser findById(UUID id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("User with id" + id + "not found"));
     }
@@ -36,7 +37,7 @@ public class UserService {
         return userRepository.save(appUser);
     }
 
-    public void deletedUser(Long id) {
+    public void deletedUser(UUID id) {
         AppUser appUser = findById(id);
         userRepository.delete(appUser);
     }

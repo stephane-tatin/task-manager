@@ -1,5 +1,6 @@
 package com.task_manager.entity;
 
+import com.task_manager.service.TaskDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -40,6 +41,18 @@ public class Task {
         this.title = title;
         this.description = description;
         this.targetTime = targetTime;
+    }
+
+    public Task(TaskDTO taskDTO, AppUser assignedTo, Column statusColumn) {
+        this.title = taskDTO.getTitle();
+        this.description = taskDTO.getDescription();
+        this.index = taskDTO.getIndex();
+        this.priority = taskDTO.getPriority();
+        this.targetTime = taskDTO.getTargetTime();
+        this.assignedTo = assignedTo;
+        this.statusColumn = statusColumn;
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
     }
 
     public Column getStatusColumn() {

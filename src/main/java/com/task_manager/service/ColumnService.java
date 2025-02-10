@@ -15,9 +15,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ColumnService {
+    @Autowired
+    private TaskService taskService;
+
 
     @Autowired
     private ColumnRepository columnRepository;
@@ -33,7 +37,7 @@ public class ColumnService {
         return columnRepository.save(column);
     }
 
-    public Column findById(Long id) {
+    public Column findById(UUID id) {
         return columnRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("User with id" + id + "not found"));
     }
@@ -42,7 +46,7 @@ public class ColumnService {
         return columnRepository.save(column);
     }
 
-    public void deletedColumn(Long id) {
+    public void deletedColumn(UUID id) {
         Column appUser = findById(id);
         columnRepository.delete(appUser);
     }
@@ -53,12 +57,13 @@ public class ColumnService {
 
         return columns.stream().map(column -> new ColumnWithTasksDTO(
                 column.getId(),
-                column.getName(),
+                column.getTitle(),
                 tasks.stream()
                         .filter(task -> task.getStatusColumn().getId().equals(column.getId()))
                         .sorted(Comparator
                                 .comparing(Task::getIndex, Comparator.nullsLast(Comparator.naturalOrder()))
                                 .thenComparing(Task::getCreatedAt))
+                        .map((task) -> taskService.toTaskDTO(task))
                         .toList()
         )).toList();
     }

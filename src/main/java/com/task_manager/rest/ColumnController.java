@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/columns")
@@ -25,11 +26,6 @@ public class ColumnController {
 
         return columnService.getAllColumnsWithTasks();
     }
-//
-//    @GetMapping("/id")
-//    public Task getTaskById(@PathVariable long id) {
-//        return taskService.findById(id);
-//    }
 
     @PostMapping
     public Column saveColumn(@RequestBody Column column) {
@@ -37,7 +33,7 @@ public class ColumnController {
     }
 
     @DeleteMapping("/id")
-    public void deleteColumn(@PathVariable long id) {
+    public void deleteColumn(@PathVariable UUID id) {
         columnService.deletedColumn(id);
     }
 }

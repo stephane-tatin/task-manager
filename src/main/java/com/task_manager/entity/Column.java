@@ -14,14 +14,14 @@ public class Column {
     private UUID id;
     @NotNull
     @Size(max=50)
-    private String name;
+    private String title;
 
     public Column() {
 
     }
 
-    public Column(String name) {
-        this.name = name;
+    public Column(String title) {
+        this.title = title;
     }
 
     public UUID getId() {
@@ -32,11 +32,11 @@ public class Column {
         this.id = id;
     }
 
-    public @NotNull @Size(max = 50) String getName() {
-        return name;
+    public @NotNull @Size(max = 50) String getTitle() {
+        return title;
     }
 
-    public void setName(@NotNull @Size(max = 50) String name) {
-        this.name = name;
+    public void setTitle(@NotNull @Size(max = 50) String title) {
+        this.title = title;
     }
 }

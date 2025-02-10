@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,17 +37,42 @@ public class TaskService {
         return taskRepository.findAll(sort);
     }
 
-    public Task findById(Long id) {
+    public Task findById(UUID id) {
         return taskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException("Task with id" + id + "not found"));
     }
 
-    public Task saveTask(Task task) {
+    public boolean existsById(UUID id) {
+        return taskRepository.existsById(id);
+    }
 
+    public Task saveTask(TaskDTO taskDTO) {
+        Task task =  createTask(taskDTO);
+        System.out.println("saving");
         return taskRepository.save(task);
     }
 
-    public void changeIndex(Task task) {
+
+    private Task createTask(TaskDTO taskDTO) {
+        System.out.println("hello" + taskDTO.getId());
+        System.out.println("hello2" + taskDTO.getAssignedToId());
+        AppUser assignedTo = userRepository.findById(taskDTO.getAssignedToId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        System.out.println("hello2" + taskDTO.getId());
+        Column statusColumn = columnRepository.findById(taskDTO.getStatusColumnId())
+                .orElseThrow(() -> new RuntimeException("Column not found"));
+        System.out.println("hello3" + taskDTO.getId());
+
+        return new Task(taskDTO, assignedTo, statusColumn);
+    }
+
+    public TaskDTO toTaskDTO(Task task) {
+        return new TaskDTO(task);
+    }
+
+
+    public void changeIndex(TaskDTO taskDTO) {
+        Task task = createTask(taskDTO);
         System.out.println("moving task" + task.getIndex() + task.getTitle());
         // Sorted tasks within the column
         List<Task> allTasks = taskRepository.findAll().stream()
@@ -71,11 +97,12 @@ public class TaskService {
         taskRepository.saveAll(allTasks);
     }
 
-    public Task updateTask(Task task) {
+    public Task updateTask(TaskDTO taskDTO) {
+        Task task = createTask(taskDTO);
         return taskRepository.save(task);
     }
 
-    public void deletedTask(Long id) {
+    public void deletedTask(UUID id) {
         Task task = findById(id);
         taskRepository.delete(task);
     }
