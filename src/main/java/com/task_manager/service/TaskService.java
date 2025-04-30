@@ -47,21 +47,22 @@ public class TaskService {
     }
 
     public Task saveTask(TaskDTO taskDTO) {
-        Task task =  createTask(taskDTO);
-        System.out.println("saving");
+
+        Task task = createTask(taskDTO);
         return taskRepository.save(task);
     }
 
 
     private Task createTask(TaskDTO taskDTO) {
-        System.out.println("hello" + taskDTO.getId());
-        System.out.println("hello2" + taskDTO.getAssignedToId());
-        AppUser assignedTo = userRepository.findById(taskDTO.getAssignedToId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        System.out.println("hello2" + taskDTO.getId());
+        AppUser assignedTo = null;
+        if (taskDTO.getAssignedToId() != null) {
+            assignedTo = userRepository.findById(taskDTO.getAssignedToId())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+        }
+
         Column statusColumn = columnRepository.findById(taskDTO.getStatusColumnId())
                 .orElseThrow(() -> new RuntimeException("Column not found"));
-        System.out.println("hello3" + taskDTO.getId());
+
 
         return new Task(taskDTO, assignedTo, statusColumn);
     }
@@ -73,8 +74,8 @@ public class TaskService {
 
     public void changeIndex(TaskDTO taskDTO) {
         Task task = createTask(taskDTO);
-        System.out.println("moving task" + task.getIndex() + task.getTitle());
-        // Sorted tasks within the column
+
+        // Fetch and filter tasks within the same column
         List<Task> allTasks = taskRepository.findAll().stream()
                 .filter(t -> task.getStatusColumn().getId().equals(t.getStatusColumn().getId()))
                 .sorted(Comparator
@@ -87,9 +88,9 @@ public class TaskService {
 
         // Ensure new index is within bounds
         int newIndex = Math.max(0, Math.min(task.getIndex(), allTasks.size()));
-
         allTasks.add(newIndex, task);
 
+        // Update indices
         for (int i = 0; i < allTasks.size(); i++) {
             allTasks.get(i).setIndex(i);
         }

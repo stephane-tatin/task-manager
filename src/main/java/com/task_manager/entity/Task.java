@@ -43,7 +43,9 @@ public class Task {
         this.targetTime = targetTime;
     }
 
+
     public Task(TaskDTO taskDTO, AppUser assignedTo, Column statusColumn) {
+        this.id = taskDTO.getId();
         this.title = taskDTO.getTitle();
         this.description = taskDTO.getDescription();
         this.index = taskDTO.getIndex();

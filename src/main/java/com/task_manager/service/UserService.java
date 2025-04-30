@@ -1,10 +1,8 @@
 package com.task_manager.service;
 
 import com.task_manager.entity.AppUser;
-import com.task_manager.entity.Role;
 import com.task_manager.exception.TaskNotFoundException;
 import com.task_manager.repository.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

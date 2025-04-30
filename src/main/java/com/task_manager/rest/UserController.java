@@ -39,4 +39,16 @@ public class UserController {
     public void deleteUser(@PathVariable UUID id) {
         userService.deletedUser(id);
     }
+
+    @GetMapping("/logged")
+    public String getLoggedInUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return "Logged-in user: " + username;
+    }
 }

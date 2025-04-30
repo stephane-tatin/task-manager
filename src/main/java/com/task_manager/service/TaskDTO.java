@@ -1,12 +1,9 @@
 package com.task_manager.service;
 
-import com.task_manager.entity.AppUser;
-import com.task_manager.entity.Column;
 import com.task_manager.entity.Priority;
 import com.task_manager.entity.Task;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 public class TaskDTO {
@@ -32,7 +29,11 @@ public class TaskDTO {
         this.index = task.getIndex();
         this.priority = task.getPriority();
         this.targetTime = task.getTargetTime();
-        this.assignedToId = task.getAssignedTo().getId();
+        if(task.getAssignedTo()!= null) {
+            this.assignedToId = task.getAssignedTo().getId();
+        } else {
+            this.assignedToId = null;
+        }
         this.statusColumnId = task.getStatusColumn().getId();
         this.createdAt = task.getCreatedAt();
         this.modifiedAt = task.getModifiedAt();

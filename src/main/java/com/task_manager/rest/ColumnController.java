@@ -1,12 +1,9 @@
 package com.task_manager.rest;
 
 import com.task_manager.entity.Column;
-import com.task_manager.entity.Task;
 import com.task_manager.service.ColumnService;
 import com.task_manager.service.ColumnWithTasksDTO;
-import com.task_manager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

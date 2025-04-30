@@ -1,10 +1,5 @@
 package com.task_manager.service;
 
-import com.task_manager.entity.AppUser;
-import com.task_manager.entity.Priority;
-import com.task_manager.entity.Task;
-
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
