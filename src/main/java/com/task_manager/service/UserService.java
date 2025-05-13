@@ -16,8 +16,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-
-
     public List<AppUser> getAllUsers(Sort sort) {
         return userRepository.findAll(sort);
     }

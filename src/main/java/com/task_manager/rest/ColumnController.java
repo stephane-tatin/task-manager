@@ -29,7 +29,7 @@ public class ColumnController {
         return columnService.saveColumn(column);
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public void deleteColumn(@PathVariable UUID id) {
         columnService.deletedColumn(id);
     }

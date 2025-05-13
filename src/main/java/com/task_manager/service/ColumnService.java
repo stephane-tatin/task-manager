@@ -5,6 +5,7 @@ import com.task_manager.entity.Task;
 import com.task_manager.exception.TaskNotFoundException;
 import com.task_manager.repository.ColumnRepository;
 import com.task_manager.repository.TaskRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -42,9 +43,11 @@ public class ColumnService {
         return columnRepository.save(column);
     }
 
+    @Transactional
     public void deletedColumn(UUID id) {
-        Column appUser = findById(id);
-        columnRepository.delete(appUser);
+        Column column = findById(id);
+        taskRepository.deleteByStatusColumn(column);
+        columnRepository.delete(column);
     }
 
     public List<ColumnWithTasksDTO> getAllColumnsWithTasks() {
