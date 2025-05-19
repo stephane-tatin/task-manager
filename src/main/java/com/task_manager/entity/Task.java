@@ -92,6 +92,22 @@ public class Task {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", statusColumn=" + statusColumn +
+                ", assignedTo=" + assignedTo +
+                ", targetTime=" + targetTime +
+                ", modifiedAt=" + modifiedAt +
+                ", createdAt=" + createdAt +
+                ", priority=" + priority +
+                ", index=" + index +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     public String getDescription() {
         return description;
     }

@@ -2,6 +2,7 @@ package com.task_manager.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -9,10 +10,14 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private final String secret = "9f2d4e7a1c3b5f8096a2d4e7b1c3f5a0896b2d4e7a1c3f5b096a2d4e7b1c3f5a0"; // store securely
-    private final long expirationMs = 86400000; // 24 hours
+    private final Key key;
+    private final long expirationMs;
 
-    private final Key key = Keys.hmacShaKeyFor(secret.getBytes());
+    public JwtUtil(@Value("${jwt.secret}") String secret,
+                   @Value("${jwt.expiration}") long expirationMs) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+        this.expirationMs = expirationMs;
+    }
 
     public String generateToken(String username) {
         return Jwts.builder()

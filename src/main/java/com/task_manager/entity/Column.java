@@ -20,6 +20,14 @@ public class Column {
 
     }
 
+    @Override
+    public String toString() {
+        return "Column{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
+
     public Column(String title) {
         this.title = title;
     }
